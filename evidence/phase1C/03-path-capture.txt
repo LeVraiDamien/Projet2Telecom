@@ -1,0 +1,13 @@
+## N3 (UPF eth0, UDP 2152) : paquets GTP-U pendant les tests HTTPS : 95
+## N6 (UPF n6, TCP 443) : 95 paquets, IP sources distinctes vers :443 :
+     59 IP 10.45.0.9 > 10.20.6.20.443
+## Premier échange TCP+TLS sur N6 (le contenu applicatif est chiffré)
+14:49:39.322978 IP 10.45.0.9.53638 > 10.20.6.20.443: Flags [S], seq 1159104688, win 65280, options [mss 1360,sackOK,TS val 145062093 ecr 0,nop,wscale 10], length 0
+14:49:39.323016 IP 10.20.6.20.443 > 10.45.0.9.53638: Flags [S.], seq 2392746609, ack 1159104689, win 65160, options [mss 1460,sackOK,TS val 3142026592 ecr 145062093,nop,wscale 10], length 0
+14:49:39.323652 IP 10.45.0.9.53638 > 10.20.6.20.443: Flags [.], ack 1, win 64, options [nop,nop,TS val 145062094 ecr 3142026592], length 0
+14:49:39.325339 IP 10.45.0.9.53638 > 10.20.6.20.443: Flags [P.], seq 1:207, ack 1, win 64, options [nop,nop,TS val 145062096 ecr 3142026592], length 206
+14:49:39.325365 IP 10.20.6.20.443 > 10.45.0.9.53638: Flags [.], ack 207, win 64, options [nop,nop,TS val 3142026594 ecr 145062096], length 0
+14:49:39.326558 IP 10.20.6.20.443 > 10.45.0.9.53638: Flags [P.], seq 1:1667, ack 207, win 64, options [nop,nop,TS val 3142026595 ecr 145062096], length 1666
+## Confidentialité : recherche de texte applicatif en clair dans les captures N6
+1A (HTTP)  occurrences de 'Welcome to nginx' : 2
+1C (HTTPS) occurrences de 'project2-django'  : 0

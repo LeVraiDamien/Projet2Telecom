@@ -1,0 +1,33 @@
+## 2026-10-19T16:47:54+02:00 Certificat de la CA
+subject=C = LV, O = Esisar-RTU Telecom Lab, CN = Telecom Lab Root CA
+issuer=C = LV, O = Esisar-RTU Telecom Lab, CN = Telecom Lab Root CA
+notBefore=Oct 19 14:47:54 2026 GMT
+notAfter=Oct 18 14:47:54 2031 GMT
+X509v3 Basic Constraints: critical
+    CA:TRUE, pathlen:0
+X509v3 Key Usage: critical
+    Certificate Sign, CRL Sign
+
+## Certificat serveur (Nginx)
+subject=C = LV, O = Esisar-RTU Telecom Lab, CN = telecom-lab.local
+issuer=C = LV, O = Esisar-RTU Telecom Lab, CN = Telecom Lab Root CA
+notBefore=Oct 19 14:47:54 2026 GMT
+notAfter=Nov 20 14:47:54 2027 GMT
+serial=67D8D53361A7A54909F392C7DFA0301BB54CBB29
+X509v3 Basic Constraints: critical
+    CA:FALSE
+X509v3 Key Usage: critical
+    Digital Signature, Key Encipherment
+X509v3 Extended Key Usage: 
+    TLS Web Server Authentication
+X509v3 Subject Alternative Name: 
+    IP Address:10.20.6.20, DNS:telecom-lab.local, DNS:localhost
+                Public-Key: (2048 bit)
+        Signature Algorithm: sha256WithRSAEncryption
+    Signature Algorithm: sha256WithRSAEncryption
+
+## Chaîne
+secrets/tls/server/server.crt: OK
+## Empreintes SHA-256
+ca/ca.crt sha256 Fingerprint=46:98:30:97:5C:02:12:FB:D9:D5:EF:53:EB:31:E8:8E:D3:41:3E:D1:3B:13:4C:F2:F2:DB:BE:55:74:73:34:81
+server/server.crt sha256 Fingerprint=EA:8C:B6:80:CF:A6:82:3A:82:E6:43:70:16:1C:A6:F6:CC:E3:E8:FE:F0:9C:10:59:32:36:56:EF:72:65:33:40

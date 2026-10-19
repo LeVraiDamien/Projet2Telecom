@@ -1,0 +1,10 @@
+## 2026-10-19T16:30:40+02:00 Image
+tag=telecom-lab-django:0.1 id=sha256:1ac4d7a7850453c328e13aaf3920c47f9a62c3dc537fc173c65c0016652784e8 created=2026-10-19T16:30:13.484864881+02:00 user=django entrypoint=["django-entrypoint.sh"]
+## Versions dans le conteneur
+Python 3.12.15
+Django 6.0.8
+gunicorn (version 26.2.0)
+## python manage.py check
+System check identified no issues (0 silenced).
+## Processus (non-root)
+uid=10001(django) gid=999(django) groups=999(django)

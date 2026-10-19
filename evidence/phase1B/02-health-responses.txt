@@ -1,0 +1,31 @@
+## 2026-10-19T16:30:42+02:00 Nginx -> Django direct sur app-net
+HTTP/1.1 200 OK
+Server: gunicorn
+Date: Mon, 19 Oct 2026 14:30:42 GMT
+Connection: close
+Content-Type: application/json
+X-Frame-Options: DENY
+Content-Length: 87
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"service": "project2-django", "status": "ok", "project": "Telecommunication Security"}
+## UE -> (5G) -> Nginx 10.20.6.20 -> app-net -> Django
+10.20.6.20 dev uesimtun0 src 10.45.0.5 uid 0 
+    cache 
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Mon, 19 Oct 2026 14:30:42 GMT
+Content-Type: application/json
+Content-Length: 87
+Connection: keep-alive
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"service": "project2-django", "status": "ok", "project": "Telecommunication Security"}
+## Log Gunicorn (requête relayée par Nginx 10.20.8.10)
+10.20.8.10 - - [19/Oct/2026:14:30:42 +0000] "GET /health/ HTTP/1.1" 200 87 "-" "curl/8.14.1"
+10.20.8.10 - - [19/Oct/2026:14:30:42 +0000] "GET /health/ HTTP/1.1" 200 87 "-" "curl/7.81.0"

@@ -1,0 +1,38 @@
+## 2026-10-19T16:49:14+02:00 CA montée dans l'UE (lecture seule)
+/home/dguffon/ProjetTelecom/Project2/secrets/tls/ca/ca.crt -> /etc/telecom-lab/ca.crt rw=false
+total 4
+-rw-r--r-- 1 1000 1000 1984 Oct 19 14:47 ca.crt
+## Tentative d'écriture dans ca.crt
+sh: 1: cannot create /etc/telecom-lab/ca.crt: Read-only file system
+## Ni la clé de la CA ni la clé serveur dans l'UE (fichiers *.key trouvés) :
+0
+## Montages de Nginx (certificat + clé serveur, pas de ca.key)
+/home/dguffon/ProjetTelecom/Project2/nginx/conf.d/scenario-a.conf -> /etc/nginx/conf.d/default.conf rw=false
+/home/dguffon/ProjetTelecom/Project2/secrets/tls/server/server.crt -> /etc/nginx/tls/server.crt rw=false
+/home/dguffon/ProjetTelecom/Project2/secrets/tls/server/server.key -> /etc/nginx/tls/server.key rw=false
+
+## UE -> https://10.20.6.20/health/ AVEC --cacert (validation réelle, pas de -k)
+10.20.6.20 dev uesimtun0 src 10.45.0.9 uid 0 
+{"service": "project2-django", "status": "ok", "project": "Telecommunication Security"}
+HTTP 200 | ssl_verify_result=0 | local=10.45.0.9 remote=10.20.6.20:443
+
+## Contre-test 1 : client avec les CA publiques habituelles mais SANS notre CA (curlimages/curl dans le réseau de l'UE) -> doit refuser
+Unable to find image 'curlimages/curl:latest' locally
+latest: Pulling from curlimages/curl
+410cbd33102b: Pulling fs layer
+410cbd33102b: Download complete
+410cbd33102b: Pull complete
+Digest: sha256:a134550be58ab783810e613ae96fd253c38f7bdd16d9bf9be350700c7a29ac06
+Status: Downloaded newer image for curlimages/curl:latest
+curl: (60) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+exit=60
+## Contre-test 2 : nom absent du SAN -> doit refuser
+curl: (60) SSL: no alternative certificate subject name matches target host name 'evil.example'
+exit=60
+## Nom présent dans le SAN (telecom-lab.local) -> OK
+HTTP 200

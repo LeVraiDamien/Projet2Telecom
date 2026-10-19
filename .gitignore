@@ -1,0 +1,37 @@
+# Secrets : jamais sur GitHub
+.env
+*.env
+!.env.example
+secrets/
+*.key
+*.p12
+*.pfx
+*.srl
+
+# Données lourdes / locales (dataset ISCX, Jenkins, bases)
+iscx/data/
+*.rar
+*.pcap.gz
+jenkins_home/
+*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Divers
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local : Claude, sujet du prof, éditeurs
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+.mcp.json
+/docs/
+.vscode/
+.idea/
+*.code-workspace

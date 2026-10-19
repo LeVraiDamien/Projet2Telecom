@@ -1,0 +1,13 @@
+## 2026-10-19T16:31:01+02:00 AVANT suppression
+container_id=c3efe907d183ca684a05c9c23a1ef595db0834240a803117c8164c30dc6bd950
+12 objects imported automatically (use -v 2 for details).
+
+migrations=18, première application=2026-10-19 14:29:53.518561
+## conteneur supprimé (docker rm -f), volume conservé : django-data
+## APRES recréation
+container_id=ff6cf25f704b29ff777d4c369e307d4ba279b2c680879155eef64d34439f0d40 health=healthy
+12 objects imported automatically (use -v 2 for details).
+
+migrations=18, première application=2026-10-19 14:29:53.518561
+Running migrations:
+  No migrations to apply.

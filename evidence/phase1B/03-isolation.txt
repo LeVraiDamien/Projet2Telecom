@@ -1,0 +1,7 @@
+## 2026-10-19T16:30:42+02:00 Isolation : l'UE ne joint PAS Django directement
+curl: (28) Connection timed out after 4000 milliseconds
+000
+## Isolation : l'UPF (dn-net) ne joint PAS app-net
+bloqué/injoignable
+## Isolation : Django n'a pas d'accès extérieur (app-net internal)
+pas d accès externe: [Errno 101] Network is unreachable

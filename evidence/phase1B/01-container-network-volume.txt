@@ -1,0 +1,22 @@
+## 2026-10-19T16:30:41+02:00 Etat du conteneur
+status=running health=healthy restart=unless-stopped
+## Derniers healthchecks
+2026-10-19 16:30:19.874420863 +0200 CEST exit=0
+2026-10-19 16:30:36.037883814 +0200 CEST exit=0
+
+## Réseaux du conteneur Django (attendu : app-net seulement)
+app-net 10.20.8.20
+
+## app-net
+subnet=10.20.8.0/24 internal=true [scenario-b-nginx 10.20.8.10/24] [scenario-b-django 10.20.8.20/24] 
+## Volume django-data
+name=django-data mountpoint=/var/lib/docker/volumes/django-data/_data
+volume django-data -> /app/data
+
+total 128
+-rw-r--r-- 1 django django 131072 Oct 19 14:29 db.sqlite3
+## Variables d'environnement Django (clé secrète masquée)
+DJANGO_ALLOWED_HOSTS=10.20.6.20,telecom-lab.local,localhost,127.0.0.1,10.20.8.20
+DJANGO_DB_PATH=/app/data/db.sqlite3
+DJANGO_DEBUG=false
+DJANGO_SECRET_KEY=***masquée***

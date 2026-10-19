@@ -1,0 +1,61 @@
+# Scénario A : passerelle N6 (Nginx) + application Django. TLS sera ajouté en phase 1C.
+
+services:
+  scenario-b-nginx:
+    image: telecom-lab-nginx:p2
+    build:
+      context: ${P2_DIR}/images/nginx
+    container_name: scenario-b-nginx
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN                # pour installer la route 10.45.0.0/16 via l'UPF
+    environment:
+      UE_SUBNET: 10.45.0.0/16
+      UPF_N6_IP: 10.20.6.10
+    volumes:
+      # dossier entier (un fichier seul resterait lié à l'ancienne version après une modification)
+      - ${P2_DIR}/nginx/conf.d:/etc/nginx/conf.d:ro
+      # certificat + clé serveur uniquement (la clé de la CA reste sur l'hôte)
+      - ${P2_DIR}/secrets/tls/server/server.crt:/etc/nginx/tls/server.crt:ro
+      - ${P2_DIR}/secrets/tls/server/server.key:/etc/nginx/tls/server.key:ro
+    networks:
+      dn-net:
+        interface_name: n6
+        ipv4_address: 10.20.6.20
+        gw_priority: 1
+      app-net:
+        interface_name: app
+        ipv4_address: 10.20.8.10
+    depends_on:
+      - upf
+      - scenario-b-django
+
+  scenario-b-django:
+    image: telecom-lab-django:0.1
+    build:
+      context: ${P2_DIR}/images/django
+      additional_contexts:
+        app: ${P2_DIR}/app
+    container_name: scenario-b-django
+    restart: unless-stopped
+    env_file:
+      - ${P2_DIR}/.env           # DJANGO_SECRET_KEY (non commité, modèle : .env.example)
+    environment:
+      DJANGO_DEBUG: "false"
+      DJANGO_ALLOWED_HOSTS: 10.20.6.20,telecom-lab.local,localhost,127.0.0.1,10.20.8.20
+      DJANGO_DB_PATH: /app/data/db.sqlite3
+    volumes:
+      - django-data:/app/data
+    networks:                    # uniquement app-net : pas d'accès direct depuis dn-net
+      app-net:
+        ipv4_address: 10.20.8.20
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health/', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  django-data:
+    name: django-data
